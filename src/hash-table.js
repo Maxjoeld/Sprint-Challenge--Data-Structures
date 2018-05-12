@@ -5,20 +5,22 @@ const { LimitedArray, getIndexBelowMax } = require('./hash-table-helpers');
 class HashTable {
   constructor(limit = 8) {
     this.limit = limit;
-    this.storage = new LimitedArray(this.limit);
+    // this.storage = new LimitedArray(this.limit);
+    this.storage = new LinkedList();
     // Do not modify anything inside of the constructor
   }
 
   resize() {
-    this.limit *= 2;
-    const oldStorage = this.storage;
-    this.storage = new LimitedArray(this.limit);
-    oldStorage.each((bucket) => {
-      if (!bucket) return;
-      bucket.forEach((pair) => {
-        this.insert(pair[0], pair[1]);
-      });
-    });
+    if(storage.size()  )
+    // this.limit *= 2;
+    // const oldStorage = this.storage;
+    // this.storage = new LimitedArray(this.limit);
+    // oldStorage.each((bucket) => {
+    //   if (!bucket) return;
+    //   bucket.forEach((pair) => {
+    //     this.insert(pair[0], pair[1]);
+    //   });
+    // });
   }
 
   capacityIsFull() {
@@ -60,6 +62,7 @@ class HashTable {
   retrieve(key) {
     const index = getIndexBelowMax(key.toString(), this.limit);
     const bucket = this.storage.get(index);
+
     let retrieved;
     if (bucket) {
       retrieved = bucket.filter(item => item[0] === key)[0];
